@@ -31,7 +31,7 @@ wss.on('connection', (ws, req) => {
     const params = new URLSearchParams(queryString);
     const token = params.get('token');
 
-    const rtmpUrl = 'rtmp://3.139.79.119/show/'+token;
+    const rtmpUrl = 'rtmp://localhost/show/'+token;
 
     const ffmpeg = child_process.spawn('ffmpeg', [
     '-i','-',
