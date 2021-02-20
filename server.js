@@ -31,24 +31,27 @@ wss.on('connection', (ws, req) => {
     const params = new URLSearchParams(queryString);
     const token = params.get('token');
 
-    const rtmpUrl = 'rtmp://localhost/show/'+token;
+    const rtmpUrl = 'rtmp://3.139.79.119/app/'+token;
+    const rtspUrl = 'rtsp://localhost:8554/'+token;
 
     const ffmpeg = child_process.spawn('ffmpeg', [
     '-i','-',
 
     // video codec config: low latency, adaptive bitrate
-    '-c:v', 'libx264', '-preset', 'veryfast', '-tune', 'zerolatency',
+    //'-c:v', 'libx264', '-preset', 'veryfast', '-tune', 'zerolatency',
+    '-c','copy',
+    '-f','rtsp',
 
 
     //force to overwrite
-    '-y',
+    //'-y',
 
 
     //'-filter_complex', 'aresample=44100', // resample audio to 44100Hz, needed if input is not 44100
     //'-strict', 'experimental',
-    '-f', 'flv',
+    //'-f', 'flv',
 
-        rtmpUrl
+    rtspUrl
     ]);
 
     // Kill the WebSocket connection if ffmpeg dies.
